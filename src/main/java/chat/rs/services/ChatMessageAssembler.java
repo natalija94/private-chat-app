@@ -1,6 +1,7 @@
 package chat.rs.services;
 
 import chat.rs.dtos.MessageInChatDTO;
+import chat.rs.enums.ChatMessageState;
 import chat.rs.model.MessageInChat;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -11,12 +12,22 @@ import java.util.List;
 @Service
 public class ChatMessageAssembler {
 
+    private final MessageInspector inspector;
+
+    public ChatMessageAssembler(MessageInspector inspector) {
+        this.inspector = inspector;
+    }
+
     public MessageInChat assemblePostFromPostDTO(final MessageInChatDTO messageInChatDTO, String ipAddress) {
         MessageInChat messageInChat = new MessageInChat();
 
         messageInChat.setMessage(messageInChatDTO.getMessage());
         messageInChat.setUsername(messageInChatDTO.getUsername());
         messageInChat.setIpAddress(ipAddress);
+
+        if(!inspector.isMessageAppropriate(messageInChatDTO.getMessage())){
+            messageInChat.setState(ChatMessageState.OFFENSIVE);
+        }
 
         //todo appropriate date handler
         messageInChat.setMessageDate(null);

@@ -2,34 +2,59 @@ package chat.rs.services;
 
 import chat.rs.dtos.MessageInChatDTO;
 import chat.rs.dtos.PageInfoDTO;
+import chat.rs.dtos.ResponseDTO;
 import chat.rs.enums.ChatMessageState;
+import chat.rs.enums.ResponseStatus;
+import chat.rs.model.MessageInChat;
 import chat.rs.repository.MessageRepository;
-import chat.rs.util.Constants;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import chat.rs.util.PageableFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class DiscussionHandler {
-    final MessageRepository messageRepository;
-    final ChatMessageAssembler chatMessageAssembler;
+    private final MessageRepository messageRepository;
+    private final ChatMessageAssembler chatMessageAssembler;
 
     public DiscussionHandler(MessageRepository messageRepository, ChatMessageAssembler chatMessageAssembler) {
         this.messageRepository = messageRepository;
         this.chatMessageAssembler = chatMessageAssembler;
     }
 
-    public void sendMessage(MessageInChatDTO postDTO, String ipAddress) {
-        messageRepository.save(chatMessageAssembler.assemblePostFromPostDTO(postDTO, ipAddress));
+    public ResponseDTO sendMessage(MessageInChatDTO postDTO, String ipAddress) {
+        ResponseDTO dto = new ResponseDTO();
+        MessageInChat messageInChat = chatMessageAssembler.assemblePostFromPostDTO(postDTO, ipAddress);
+
+        try {
+            if (ChatMessageState.OKAY == messageInChat.getState()) {
+                messageRepository.save(messageInChat);
+                dto.setStatus(ResponseStatus.SUCCESS);
+                log.info("Message is successfully saved. Details: ", messageInChat);
+            } else {
+                dto.setStatus(ResponseStatus.ERROR);
+                dto.setErrorMessage("Hey!:) Offensive content is not appropriate in this discussion.");
+            }
+        } catch (Exception e) {
+            dto.setStatus(ResponseStatus.ERROR);
+            dto.setErrorMessage("ERROR. Not possible to send message. Please try again");
+        }
+        return dto;
     }
 
-    public List<MessageInChatDTO> getRequestedAmountOfPosts(PageInfoDTO pageInfoDTO) {
-        Pageable pageable = PageRequest.of(pageInfoDTO.getPage(), pageInfoDTO.getNumberOfPostsPerPage() > 0 ? pageInfoDTO.getNumberOfPostsPerPage() : Constants.DEFAULT_NUMBER_OF_MESSAGES_PER_REQUEST);
-
-        return chatMessageAssembler.assemblePostDTOSFromPosts(
-                messageRepository.findAllByStateOrderByPostDateAsc(ChatMessageState.OKAY, pageable));
+    public ResponseDTO getConversationDetails(PageInfoDTO pageInfoDTO) {
+        ResponseDTO dto = new ResponseDTO();
+        try {
+            List<MessageInChatDTO> messageInChatDTOS = chatMessageAssembler.assemblePostDTOSFromPosts(
+                    messageRepository.findAllByStateOrderByPostDateAsc(ChatMessageState.OKAY, PageableFactory.pageableInstance(pageInfoDTO)));
+            dto.setData(messageInChatDTOS);
+            dto.setStatus(ResponseStatus.SUCCESS);
+        } catch (Exception e) {
+            dto.setStatus(ResponseStatus.ERROR);
+            dto.setErrorMessage("SERVER ERROR. Getting conversation details...");
+        }
+        return dto;
     }
-
 }
