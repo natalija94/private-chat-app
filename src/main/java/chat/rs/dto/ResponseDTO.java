@@ -1,6 +1,6 @@
-package chat.rs.dtos;
+package chat.rs.dto;
 
-import chat.rs.enums.ResponseStatus;
+import chat.rs.chatenum.ResponseStatus;
 import lombok.Data;
 
 import java.io.Serializable;

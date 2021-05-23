@@ -1,4 +1,4 @@
-package chat.rs.enums;
+package chat.rs.chatenum;
 
 public enum ResponseStatus {
     ERROR,

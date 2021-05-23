@@ -1,6 +1,6 @@
-package chat.rs.services.impl;
+package chat.rs.service.impl;
 
-import chat.rs.services.MessageInspector;
+import chat.rs.service.MessageInspector;
 import chat.rs.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

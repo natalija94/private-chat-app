@@ -1,6 +1,6 @@
 package chat.rs.model;
 
-import chat.rs.enums.ChatMessageState;
+import chat.rs.chatenum.ChatMessageState;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;

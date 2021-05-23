@@ -1,6 +1,6 @@
 package chat.rs.util;
 
-import chat.rs.dtos.PageInfoDTO;
+import chat.rs.dto.PageInfoDTO;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 

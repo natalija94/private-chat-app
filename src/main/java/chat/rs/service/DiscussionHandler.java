@@ -1,10 +1,11 @@
-package chat.rs.services;
+package chat.rs.service;
 
-import chat.rs.dtos.MessageInChatDTO;
-import chat.rs.dtos.PageInfoDTO;
-import chat.rs.dtos.ResponseDTO;
-import chat.rs.enums.ChatMessageState;
-import chat.rs.enums.ResponseStatus;
+import chat.rs.dto.MessageInChatDTO;
+import chat.rs.dto.PageInfoDTO;
+import chat.rs.dto.ResponseDTO;
+import chat.rs.chatenum.ChatMessageState;
+import chat.rs.chatenum.ResponseStatus;
+import chat.rs.converter.ChatMessageConverter;
 import chat.rs.model.MessageInChat;
 import chat.rs.repository.MessageRepository;
 import chat.rs.util.PageableFactory;
@@ -17,16 +18,16 @@ import java.util.List;
 @Slf4j
 public class DiscussionHandler {
     private final MessageRepository messageRepository;
-    private final ChatMessageAssembler chatMessageAssembler;
+    private final ChatMessageConverter chatMessageConverter;
 
-    public DiscussionHandler(MessageRepository messageRepository, ChatMessageAssembler chatMessageAssembler) {
+    public DiscussionHandler(MessageRepository messageRepository, ChatMessageConverter chatMessageConverter) {
         this.messageRepository = messageRepository;
-        this.chatMessageAssembler = chatMessageAssembler;
+        this.chatMessageConverter = chatMessageConverter;
     }
 
     public ResponseDTO sendMessage(MessageInChatDTO postDTO, String ipAddress) {
         ResponseDTO dto = new ResponseDTO();
-        MessageInChat messageInChat = chatMessageAssembler.assemblePostFromPostDTO(postDTO, ipAddress);
+        MessageInChat messageInChat = chatMessageConverter.assemblePostFromPostDTO(postDTO, ipAddress);
 
         try {
             if (ChatMessageState.OKAY == messageInChat.getState()) {
@@ -47,8 +48,8 @@ public class DiscussionHandler {
     public ResponseDTO getConversationDetails(PageInfoDTO pageInfoDTO) {
         ResponseDTO dto = new ResponseDTO();
         try {
-            List<MessageInChatDTO> messageInChatDTOS = chatMessageAssembler.assemblePostDTOSFromPosts(
-                    messageRepository.findAllByStateOrderByPostDateAsc(ChatMessageState.OKAY, PageableFactory.pageableInstance(pageInfoDTO)));
+            List<MessageInChatDTO> messageInChatDTOS = chatMessageConverter.assemblePostDTOSFromPosts(
+                    messageRepository.findAllByStateOrderByMessageDateAsc(ChatMessageState.OKAY, PageableFactory.pageableInstance(pageInfoDTO)));
             dto.setData(messageInChatDTOS);
             dto.setStatus(ResponseStatus.SUCCESS);
         } catch (Exception e) {

@@ -1,4 +1,4 @@
-package chat.rs.dtos;
+package chat.rs.dto;
 
 import lombok.Data;
 

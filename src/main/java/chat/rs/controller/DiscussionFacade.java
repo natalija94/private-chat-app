@@ -1,9 +1,9 @@
 package chat.rs.controller;
 
-import chat.rs.dtos.MessageInChatDTO;
-import chat.rs.dtos.PageInfoDTO;
-import chat.rs.dtos.ResponseDTO;
-import chat.rs.services.DiscussionHandler;
+import chat.rs.dto.MessageInChatDTO;
+import chat.rs.dto.PageInfoDTO;
+import chat.rs.dto.ResponseDTO;
+import chat.rs.service.DiscussionHandler;
 import chat.rs.util.HttpRequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +31,10 @@ public class DiscussionFacade {
     public ResponseDTO getConversationData(@RequestParam("page") int page,
                                                  @RequestParam("numberOfMessagesPerPage") int numberOfMessagesPerPage) {
         return discussionHandler.getConversationDetails(new PageInfoDTO(page, numberOfMessagesPerPage));
+    }
+
+    @GetMapping("/info")
+    public String quickTest(){
+        return "This method is made for test purposes!";
     }
 }
