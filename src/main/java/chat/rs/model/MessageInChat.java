@@ -4,15 +4,18 @@ import chat.rs.chatenum.ChatMessageState;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table
 @Data
 public class MessageInChat {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    //todo : handle sequence
+    //@GeneratedValue(strategy= GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
     private Long id;
 
@@ -21,7 +24,6 @@ public class MessageInChat {
 
     //for handling offensive content
     private String ipAddress;
-
 
     private LocalDateTime messageDate;
 

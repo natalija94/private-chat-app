@@ -12,6 +12,7 @@ import chat.rs.util.PageableFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -25,6 +26,7 @@ public class DiscussionHandler {
         this.chatMessageConverter = chatMessageConverter;
     }
 
+    @Transactional
     public ResponseDTO sendMessage(MessageInChatDTO postDTO, String ipAddress) {
         ResponseDTO dto = new ResponseDTO();
         MessageInChat messageInChat = chatMessageConverter.assemblePostFromPostDTO(postDTO, ipAddress);
@@ -45,6 +47,7 @@ public class DiscussionHandler {
         return dto;
     }
 
+    @Transactional
     public ResponseDTO getConversationDetails(PageInfoDTO pageInfoDTO) {
         ResponseDTO dto = new ResponseDTO();
         try {

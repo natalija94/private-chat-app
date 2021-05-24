@@ -28,13 +28,13 @@ public class DiscussionFacade {
     }
 
     @GetMapping("/get-conversation-data")
-    public ResponseDTO getConversationData(@RequestParam("page") int page,
-                                                 @RequestParam("numberOfMessagesPerPage") int numberOfMessagesPerPage) {
+    public ResponseDTO getConversationData(@RequestParam(name = "page", required = false) int page,
+                                           @RequestParam(name = "numberOfMessagesPerPage", required = false) int numberOfMessagesPerPage) {
         return discussionHandler.getConversationDetails(new PageInfoDTO(page, numberOfMessagesPerPage));
     }
 
     @GetMapping("/info")
-    public String quickTest(){
+    public String quickTest() {
         return "This method is made for test purposes!";
     }
 }

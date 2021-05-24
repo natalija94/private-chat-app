@@ -4,6 +4,7 @@ import chat.rs.dto.MessageInChatDTO;
 import chat.rs.chatenum.ChatMessageState;
 import chat.rs.model.MessageInChat;
 import chat.rs.service.MessageInspector;
+import chat.rs.util.DateUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -26,12 +27,10 @@ public class ChatMessageConverter {
         messageInChat.setUsername(messageInChatDTO.getUsername());
         messageInChat.setIpAddress(ipAddress);
 
-        if(!inspector.isMessageAppropriate(messageInChatDTO.getMessage())){
+        if(inspector.isMessageOffensive(messageInChatDTO.getMessage())){
             messageInChat.setState(ChatMessageState.OFFENSIVE);
         }
-
-        //todo appropriate date handler
-        messageInChat.setMessageDate(null);
+        messageInChat.setMessageDate(DateUtil.convertToLocalDateTime(messageInChatDTO.getFormattedDate()));
 
         return messageInChat;
     }
@@ -43,8 +42,7 @@ public class ChatMessageConverter {
         messageInChatDTO.setMessage(messageInChat.getMessage());
         messageInChatDTO.setIpAddress(messageInChat.getIpAddress());
 
-        //todo appropriate date handler
-        messageInChatDTO.setFormattedDate(null);
+        messageInChatDTO.setFormattedDate(DateUtil.convertToDateString(messageInChat.getMessageDate()));
 
         return messageInChatDTO;
     }
