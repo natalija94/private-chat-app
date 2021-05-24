@@ -1,10 +1,7 @@
 package chat.rs.model;
 
 import chat.rs.chatenum.ChatMessageState;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,18 +11,23 @@ import java.time.LocalDateTime;
 @Data
 public class MessageInChat {
     @Id
-    //todo : handle sequence
-    //@GeneratedValue(strategy= GenerationType.AUTO)
-    @Setter(AccessLevel.NONE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column
     private String username;
+
+    @Column
     private String message;
 
-    //for handling offensive content
+    //for handling offensive content, and eventually do the chatter ban
+    @Column
     private String ipAddress;
 
+    @Column
     private LocalDateTime messageDate;
 
+    @Column
+    @Enumerated(EnumType.STRING)
     private ChatMessageState state = ChatMessageState.OKAY;
 }

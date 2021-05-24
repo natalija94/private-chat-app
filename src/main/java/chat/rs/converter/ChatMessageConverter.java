@@ -20,22 +20,23 @@ public class ChatMessageConverter {
         this.inspector = inspector;
     }
 
-    public MessageInChat assemblePostFromPostDTO(final MessageInChatDTO messageInChatDTO, String ipAddress) {
+    public MessageInChat assembleMessageFromMessageDTO(final MessageInChatDTO messageInChatDTO, String ipAddress) {
         MessageInChat messageInChat = new MessageInChat();
 
         messageInChat.setMessage(messageInChatDTO.getMessage());
         messageInChat.setUsername(messageInChatDTO.getUsername());
         messageInChat.setIpAddress(ipAddress);
 
-        if(inspector.isMessageOffensive(messageInChatDTO.getMessage())){
+        if (inspector.isMessageOffensive(messageInChatDTO.getMessage())) {
             messageInChat.setState(ChatMessageState.OFFENSIVE);
         }
-        messageInChat.setMessageDate(DateUtil.convertToLocalDateTime(messageInChatDTO.getFormattedDate()));
+
+        messageInChat.setMessageDate(DateUtil.convertToLocalDateTimeNow());
 
         return messageInChat;
     }
 
-    public MessageInChatDTO assemblePostDTOFromPost(final MessageInChat messageInChat) {
+    public MessageInChatDTO assembleMessageDTOFromMessage(final MessageInChat messageInChat) {
         MessageInChatDTO messageInChatDTO = new MessageInChatDTO();
 
         messageInChatDTO.setUsername(messageInChat.getUsername());
@@ -47,12 +48,12 @@ public class ChatMessageConverter {
         return messageInChatDTO;
     }
 
-    public List<MessageInChatDTO> assemblePostDTOSFromPosts(List<MessageInChat> messages) {
+    public List<MessageInChatDTO> assemblePostDTOSFromMessage(List<MessageInChat> messages) {
         if (CollectionUtils.isEmpty(messages)) {
             return new ArrayList<>();
         } else {
             List<MessageInChatDTO> messageInChatDTOS = new ArrayList<>();
-            messages.stream().forEach(message -> messageInChatDTOS.add(assemblePostDTOFromPost(message)));
+            messages.stream().forEach(message -> messageInChatDTOS.add(assembleMessageDTOFromMessage(message)));
             return messageInChatDTOS;
         }
     }

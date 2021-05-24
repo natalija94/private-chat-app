@@ -10,10 +10,10 @@ public class PageableFactory {
     }
 
     public static Pageable pageableInstance(PageInfoDTO pageInfoDTO) {
-        if (pageInfoDTO == null || pageInfoDTO.getPage() == 0 || pageInfoDTO.getNumberOfPostsPerPage() == 0) {
-            return PageRequest.of(Constants.DEFAULT_PAGE_NUMBER, Constants.DEFAULT_NUMBER_OF_MESSAGES_PER_REQUEST);
-        } else {
+        if (pageInfoDTO != null && pageInfoDTO.getPage() >= 0 && pageInfoDTO.getNumberOfPostsPerPage() > 0) {
             return PageRequest.of(pageInfoDTO.getPage(), pageInfoDTO.getNumberOfPostsPerPage());
+        } else {
+            return PageRequest.of(Constants.DEFAULT_PAGE_NUMBER, Constants.DEFAULT_NUMBER_OF_MESSAGES_PER_REQUEST);
         }
     }
 

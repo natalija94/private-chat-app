@@ -23,7 +23,7 @@ public class DiscussionFacade {
 
     @PostMapping("/send-message")
     public ResponseDTO postSynchronizationData(@RequestBody MessageInChatDTO synchronizationRequestTO, HttpServletRequest httpRequest) {
-        log.info("New message received! Message info: ", synchronizationRequestTO);
+        log.info("New message received! Message info: {}", synchronizationRequestTO);
         return discussionHandler.sendMessage(synchronizationRequestTO, HttpRequestUtil.getClientIpAddressFromRequest(httpRequest));
     }
 
@@ -31,10 +31,5 @@ public class DiscussionFacade {
     public ResponseDTO getConversationData(@RequestParam(name = "page", required = false) int page,
                                            @RequestParam(name = "numberOfMessagesPerPage", required = false) int numberOfMessagesPerPage) {
         return discussionHandler.getConversationDetails(new PageInfoDTO(page, numberOfMessagesPerPage));
-    }
-
-    @GetMapping("/info")
-    public String quickTest() {
-        return "This method is made for test purposes!";
     }
 }

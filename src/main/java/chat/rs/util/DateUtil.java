@@ -1,8 +1,11 @@
 package chat.rs.util;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.FormatStyle;
+import java.util.Calendar;
 
 public class DateUtil {
 
@@ -10,25 +13,10 @@ public class DateUtil {
     }
 
     public static String convertToDateString(LocalDateTime localDateTime) {
-        //todo
-        return null;
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).format(localDateTime);
     }
 
-    public static LocalDateTime convertToLocalDateTime(Date date) {
-        if (date == null) {
-            return null;
-        }
-        //todo
-
-        return null;
-    }
-
-    public static LocalDateTime convertToLocalDateTime(String date) {
-        if (date == null) {
-            return null;
-        }
-        //todo check
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(Constants.DATE_PATTERN);
-        return LocalDateTime.parse(date.replace("T", " ").replace("Z", ""), timeFormatter);
+    public static LocalDateTime convertToLocalDateTimeNow() {
+        return new Timestamp(Calendar.getInstance().getTimeInMillis()).toLocalDateTime();
     }
 }
