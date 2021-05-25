@@ -1,7 +1,7 @@
 package chat.rs.chatenum;
 
 public enum ChatMessageState {
-    OKAY("Okay"),
+    OKAY("OKAY"),
     OFFENSIVE("OFFENSIVE");
 
     private String value;
