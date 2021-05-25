@@ -39,7 +39,7 @@ public class DiscussionFacade {
 
     @GetMapping(RestConstants.GET_FULL_DISCUSSION_PATH)
     public ResponseDTO getFullDiscussion(@RequestParam(name = "filter") DiscussionFilter filter) {
-        log.info("Get resource: {}", RestConstants.GET_PART_OF_DISCUSSION_PATH);
+        log.info("Get resource: {}", RestConstants.GET_FULL_DISCUSSION_PATH);
         return discussionHandler.getFullConversation(filter);
     }
 }
