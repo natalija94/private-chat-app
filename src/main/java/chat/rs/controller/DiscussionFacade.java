@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RequestMapping(RestConstants.DISCUSSION_GLOBAL_PATH)
 public class DiscussionFacade {
-
-    //TODO: consider implementing websocket mechanism instead of HTTP get part of discussion...
     private final DiscussionHandler discussionHandler;
 
     public DiscussionFacade(DiscussionHandler discussionHandler) {
