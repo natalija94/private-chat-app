@@ -17,7 +17,7 @@ public class MessageInChat {
     @Column(nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String message;
 
     //for handling offensive content, and eventually do the chatter ban

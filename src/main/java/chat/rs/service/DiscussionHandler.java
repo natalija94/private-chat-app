@@ -1,5 +1,6 @@
 package chat.rs.service;
 
+import chat.rs.chatenum.ChatMessageFilterMapper;
 import chat.rs.chatenum.DiscussionFilter;
 import chat.rs.dto.MessageInChatDTO;
 import chat.rs.dto.PageInfoDTO;
@@ -47,22 +48,29 @@ public class DiscussionHandler {
                 dto.setStatus(ResponseStatus.ERROR);
                 dto.setErrorMessage("Hey!:) Offensive content is not appropriate in this discussion.");
             }
+            dto.setData(messageInChat.getState());
         } catch (Exception e) {
             dto.setStatus(ResponseStatus.ERROR);
             dto.setErrorMessage("ERROR. Not possible to send message. Please try again");
         }
 
-        messagingTemplate.convertAndSend(RestConstants.GET_FULL_DISCUSSION_PATH, getFullConversation(DiscussionFilter.APPROPRIATE_CONTENT));
+        //inform other clients regarding new messages
+        messagingTemplate.convertAndSend(RestConstants.GET_FULL_DISCUSSION_PATH, getFullConversation(DiscussionFilter.NONE));
 
+        //handle response to sender of the message over the rest
         return dto;
     }
 
-    public ResponseDTO getConversationDetails(PageInfoDTO pageInfoDTO) {
+    public ResponseDTO getConversationDetails(PageInfoDTO pageInfoDTO, DiscussionFilter filter) {
         ResponseDTO dto = new ResponseDTO();
         try {
-            Slice<MessageInChatVO> messagesForSpecifiedPage = discussionRepository.findFullConversationByState(ChatMessageState.OKAY,
-                    PageableFactory.pageableInstance(pageInfoDTO));
-
+            Slice<MessageInChatVO> messagesForSpecifiedPage;
+            ChatMessageState query = ChatMessageFilterMapper.mapDiscussionFilterToChatMessageState(filter);
+            if(query==null){
+                messagesForSpecifiedPage = discussionRepository.findConversationPaginated(PageableFactory.pageableInstance(pageInfoDTO));
+            } else {
+                messagesForSpecifiedPage = discussionRepository.findFullConversationByStatePaginated(query, PageableFactory.pageableInstance(pageInfoDTO));
+            }
             dto.setData(messagesForSpecifiedPage.getContent());
             dto.setStatus(ResponseStatus.SUCCESS);
         } catch (Exception e) {
@@ -76,20 +84,12 @@ public class DiscussionHandler {
         ResponseDTO dto = new ResponseDTO();
         try {
             List<MessageInChatVO> messagesForSpecifiedPage;
-            switch (discussionFilter) {
-                case APPROPRIATE_CONTENT:
-                    messagesForSpecifiedPage = discussionRepository.findFullConversationByState(ChatMessageState.OKAY);
-                    break;
-
-                case OFFENSIVE_CONTENT:
-                    messagesForSpecifiedPage = discussionRepository.findFullConversationByState(ChatMessageState.OFFENSIVE);
-                    break;
-
-                case NONE:
-                default:
-                    messagesForSpecifiedPage = discussionRepository.getFullConversationForPreview();
+            ChatMessageState query = ChatMessageFilterMapper.mapDiscussionFilterToChatMessageState(discussionFilter);
+            if(query==null){
+                messagesForSpecifiedPage = discussionRepository.getFullConversationForPreview();
+            } else {
+                messagesForSpecifiedPage = discussionRepository.findFullConversationByState(query);
             }
-
             dto.setData(messagesForSpecifiedPage);
             dto.setStatus(ResponseStatus.SUCCESS);
         } catch (Exception e) {

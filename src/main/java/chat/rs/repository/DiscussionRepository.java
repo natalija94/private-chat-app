@@ -12,8 +12,11 @@ import java.util.List;
 
 public interface DiscussionRepository extends CrudRepository<MessageInChat, Long> {
     @Query("SELECT new chat.rs.model.MessageInChatVO(m) FROM MessageInChat m WHERE :state = m.state")
-    Slice<MessageInChatVO> findFullConversationByState(ChatMessageState state, Pageable pageable);
+    Slice<MessageInChatVO> findFullConversationByStatePaginated(ChatMessageState state, Pageable pageable);
 
+    @Query("SELECT new chat.rs.model.MessageInChatVO(m) FROM MessageInChat m")
+    Slice<MessageInChatVO> findConversationPaginated(Pageable pageable);
+    
     @Query("SELECT new chat.rs.model.MessageInChatVO(m) FROM MessageInChat m WHERE :state = m.state")
     List<MessageInChatVO> findFullConversationByState(ChatMessageState state);
 

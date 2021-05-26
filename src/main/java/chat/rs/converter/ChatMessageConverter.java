@@ -15,35 +15,27 @@ import java.util.List;
 public class ChatMessageConverter {
 
     private final MessageInspector inspector;
-
     public ChatMessageConverter(MessageInspector inspector) {
         this.inspector = inspector;
     }
 
     public MessageInChat assembleMessageFromMessageDTO(final MessageInChatDTO messageInChatDTO, String ipAddress) {
         MessageInChat messageInChat = new MessageInChat();
-
         messageInChat.setMessage(messageInChatDTO.getMessage());
         messageInChat.setUsername(messageInChatDTO.getUsername());
         messageInChat.setIpAddress(ipAddress);
-
         if (inspector.isMessageOffensive(messageInChatDTO.getMessage())) {
             messageInChat.setState(ChatMessageState.OFFENSIVE);
         }
-
         messageInChat.setMessageDate(DateUtil.convertToLocalDateTimeNow());
-
         return messageInChat;
     }
 
     public MessageInChatDTO assembleMessageDTOFromMessage(final MessageInChat messageInChat) {
         MessageInChatDTO messageInChatDTO = new MessageInChatDTO();
-
         messageInChatDTO.setUsername(messageInChat.getUsername());
         messageInChatDTO.setMessage(messageInChat.getMessage());
-
         messageInChatDTO.setMessageDate(DateUtil.convertToDateString(messageInChat.getMessageDate()));
-
         return messageInChatDTO;
     }
 
