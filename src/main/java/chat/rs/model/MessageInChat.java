@@ -14,20 +14,20 @@ public class MessageInChat {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String username;
 
-    @Column
+    @Column(nullable = false)
     private String message;
 
     //for handling offensive content, and eventually do the chatter ban
     @Column
     private String ipAddress;
 
-    @Column
+    @Column(nullable = false)
     private LocalDateTime messageDate;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ChatMessageState state = ChatMessageState.OKAY;
 }

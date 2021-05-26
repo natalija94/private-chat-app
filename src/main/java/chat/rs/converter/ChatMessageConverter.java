@@ -41,9 +41,8 @@ public class ChatMessageConverter {
 
         messageInChatDTO.setUsername(messageInChat.getUsername());
         messageInChatDTO.setMessage(messageInChat.getMessage());
-        messageInChatDTO.setIpAddress(messageInChat.getIpAddress());
 
-        messageInChatDTO.setFormattedDate(DateUtil.convertToDateString(messageInChat.getMessageDate()));
+        messageInChatDTO.setMessageDate(DateUtil.convertToDateString(messageInChat.getMessageDate()));
 
         return messageInChatDTO;
     }

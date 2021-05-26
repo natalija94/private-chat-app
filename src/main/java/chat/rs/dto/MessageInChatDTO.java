@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class MessageInChatDTO implements Serializable {
     private String username;
     private String message;
-    private String ipAddress;
 
-    private String formattedDate;
+    //maybe remove this one
+    private String messageDate;
 }

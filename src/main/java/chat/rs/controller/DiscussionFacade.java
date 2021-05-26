@@ -25,12 +25,14 @@ public class DiscussionFacade {
     }
 
     @PostMapping(RestConstants.SEND_MESSAGE_PATH)
+    @CrossOrigin(origins="http://localhost:3000")
     public ResponseDTO postSynchronizationData(@RequestBody MessageInChatDTO synchronizationRequestTO, HttpServletRequest httpRequest) {
         log.info("New message received! Message info: {}", synchronizationRequestTO);
         return discussionHandler.sendMessage(synchronizationRequestTO, HttpRequestUtil.getClientIpAddressFromRequest(httpRequest));
     }
 
     @GetMapping(RestConstants.GET_PART_OF_DISCUSSION_PATH)
+    @CrossOrigin(origins="http://localhost:3000")
     public ResponseDTO getConversationData(@RequestParam(name = "page", required = false) int page,
                                            @RequestParam(name = "numberOfMessagesPerPage", required = false) int numberOfMessagesPerPage) {
         log.info("Get resource: {}", RestConstants.GET_PART_OF_DISCUSSION_PATH);
@@ -38,6 +40,7 @@ public class DiscussionFacade {
     }
 
     @GetMapping(RestConstants.GET_FULL_DISCUSSION_PATH)
+    @CrossOrigin(origins="http://localhost:3000")
     public ResponseDTO getFullDiscussion(@RequestParam(name = "filter") DiscussionFilter filter) {
         log.info("Get resource: {}", RestConstants.GET_FULL_DISCUSSION_PATH);
         return discussionHandler.getFullConversation(filter);

@@ -11,8 +11,10 @@ import chat.rs.model.MessageInChat;
 import chat.rs.model.MessageInChatVO;
 import chat.rs.repository.DiscussionRepository;
 import chat.rs.util.PageableFactory;
+import chat.rs.util.RestConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Slice;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,10 +26,12 @@ import java.util.List;
 public class DiscussionHandler {
     private final DiscussionRepository discussionRepository;
     private final ChatMessageConverter chatMessageConverter;
+    private final SimpMessagingTemplate messagingTemplate;
 
-    public DiscussionHandler(DiscussionRepository discussionRepository, ChatMessageConverter chatMessageConverter) {
+    public DiscussionHandler(DiscussionRepository discussionRepository, ChatMessageConverter chatMessageConverter, SimpMessagingTemplate messagingTemplate) {
         this.discussionRepository = discussionRepository;
         this.chatMessageConverter = chatMessageConverter;
+        this.messagingTemplate = messagingTemplate;
     }
 
     public ResponseDTO sendMessage(MessageInChatDTO postDTO, String ipAddress) {
@@ -47,6 +51,9 @@ public class DiscussionHandler {
             dto.setStatus(ResponseStatus.ERROR);
             dto.setErrorMessage("ERROR. Not possible to send message. Please try again");
         }
+
+        messagingTemplate.convertAndSend(RestConstants.GET_FULL_DISCUSSION_PATH, getFullConversation(DiscussionFilter.APPROPRIATE_CONTENT));
+
         return dto;
     }
 
