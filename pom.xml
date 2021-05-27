@@ -28,12 +28,12 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-<!--        &lt;!&ndash;        test&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-test</artifactId>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash;        test dep end&ndash;&gt;-->
+        <!--        &lt;!&ndash;        test&ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-test</artifactId>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash;        test dep end&ndash;&gt;-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -86,7 +86,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>

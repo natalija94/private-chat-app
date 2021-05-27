@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author natalija
+ */
 @Data
 public class ResponseDTO implements Serializable {
     private ResponseStatus status;

@@ -10,6 +10,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
+/**
+ * @author natalija
+ */
 public interface DiscussionRepository extends CrudRepository<MessageInChat, Long> {
     @Query("SELECT new chat.rs.model.MessageInChatVO(m) FROM MessageInChat m WHERE :state = m.state")
     Slice<MessageInChatVO> findFullConversationByStatePaginated(ChatMessageState state, Pageable pageable);

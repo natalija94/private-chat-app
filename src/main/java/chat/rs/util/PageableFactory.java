@@ -4,7 +4,9 @@ import chat.rs.dto.PageInfoDTO;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-
+/**
+ * @author natalija
+ */
 public class PageableFactory {
     private PageableFactory() {
     }

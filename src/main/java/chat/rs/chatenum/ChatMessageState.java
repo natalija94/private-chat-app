@@ -1,5 +1,8 @@
 package chat.rs.chatenum;
 
+/**
+ * @author natalija
+ */
 public enum ChatMessageState {
     OKAY("OKAY"),
     OFFENSIVE("OFFENSIVE");

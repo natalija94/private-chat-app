@@ -2,6 +2,9 @@ package chat.rs.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author natalija
+ */
 public class HttpRequestUtil {
     private HttpRequestUtil() {
     }

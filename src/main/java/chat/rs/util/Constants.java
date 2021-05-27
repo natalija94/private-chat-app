@@ -1,5 +1,8 @@
 package chat.rs.util;
 
+/**
+ * @author natalija
+ */
 public class Constants {
     private Constants() {
     }

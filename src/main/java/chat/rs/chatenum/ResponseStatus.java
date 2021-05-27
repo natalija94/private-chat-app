@@ -1,5 +1,8 @@
 package chat.rs.chatenum;
 
+/**
+ * @author natalija
+ */
 public enum ResponseStatus {
     ERROR("ERROR"),
     SUCCESS("SUCCESS");

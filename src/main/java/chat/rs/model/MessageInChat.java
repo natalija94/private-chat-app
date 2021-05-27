@@ -6,6 +6,9 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * @author natalija
+ */
 @Entity
 @Table
 @Data

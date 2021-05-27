@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author natalija
+ */
 @RestController
 @Slf4j
 @RequestMapping(RestConstants.DISCUSSION_GLOBAL_PATH)

@@ -1,5 +1,8 @@
 package chat.rs.chatenum;
 
+/**
+ * @author natalija
+ */
 public enum DiscussionFilter {
     NONE("NONE"),
     APPROPRIATE_CONTENT("APPROPRIATE_CONTENT"),

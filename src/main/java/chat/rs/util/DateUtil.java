@@ -7,6 +7,9 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.FormatStyle;
 import java.util.Calendar;
 
+/**
+ * @author natalija
+ */
 public class DateUtil {
 
     private DateUtil() {

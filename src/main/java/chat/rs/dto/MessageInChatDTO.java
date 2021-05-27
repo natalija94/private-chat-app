@@ -4,6 +4,9 @@ import lombok.*;
 
 import java.io.Serializable;
 
+/**
+ * @author natalija
+ */
 @Data
 public class MessageInChatDTO implements Serializable {
     private String username;

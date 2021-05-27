@@ -4,8 +4,9 @@ import chat.rs.chatenum.ChatMessageState;
 import chat.rs.util.DateUtil;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
+/**
+ * @author natalija
+ */
 @Data
 public class MessageInChatVO {
     private String username;

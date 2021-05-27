@@ -5,6 +5,9 @@ import chat.rs.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author natalija
+ */
 @Service
 public class MessageInspectorImpl implements MessageInspector {
     @Override

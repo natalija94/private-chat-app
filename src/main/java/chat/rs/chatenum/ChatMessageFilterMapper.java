@@ -1,5 +1,8 @@
 package chat.rs.chatenum;
 
+/**
+ * @author natalija
+ */
 public class ChatMessageFilterMapper {
     private ChatMessageFilterMapper() {
     }

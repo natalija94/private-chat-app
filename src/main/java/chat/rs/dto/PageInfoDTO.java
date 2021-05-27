@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author natalija
+ */
 @Data
 public class PageInfoDTO implements Serializable {
     public PageInfoDTO() {
