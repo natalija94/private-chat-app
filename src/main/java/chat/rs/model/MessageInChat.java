@@ -13,23 +13,42 @@ import java.time.LocalDateTime;
 @Table
 @Data
 public class MessageInChat {
+    /**
+     * Message id.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+
+    /**
+     * Sender's username.
+     */
     @Column(nullable = false)
     private String username;
 
+    /**
+     * Text message content.
+     */
     @Column(nullable = false, columnDefinition = "TEXT")
     private String message;
 
-    //for handling offensive content, and eventually do the chatter ban
+    /**
+     * IP address of the machine where message is sent.
+     * Introduced due to handling offensive content, and eventually lately the sender ban.
+     */
     @Column
     private String ipAddress;
 
+    /**
+     * Date and time when the message is sent.
+     */
     @Column(nullable = false)
     private LocalDateTime messageDate;
 
+    /**
+     * Chat message state. Good for filtering, some post histories, etc...
+     */
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ChatMessageState state = ChatMessageState.OKAY;

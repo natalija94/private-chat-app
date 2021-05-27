@@ -10,8 +10,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MessageInspectorImpl implements MessageInspector {
+    /**
+     * One of possible implementations which checks whether message is offensive or not.
+     *
+     * @param message to be checked.
+     * @return true/false.
+     */
     @Override
-    public boolean isMessageOffensive(String message) {
+    public boolean isTextMessageOffensive(String message) {
         //just an example of service; it could be called another entity here (different logic, http request etc..)
         // which checks the content of the message
         return StringUtils.containsIgnoreCase(message, Constants.HATE_SPEECH);

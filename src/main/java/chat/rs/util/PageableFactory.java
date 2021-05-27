@@ -8,9 +8,19 @@ import org.springframework.data.domain.Pageable;
  * @author natalija
  */
 public class PageableFactory {
+    /**
+     * Util class. Private constructor.
+     */
     private PageableFactory() {
     }
 
+    /**
+     * Creates appropriate Pageable ready for filtering the discussion.
+     * If appropriate params are not passed it returns a default Pageable.
+     *
+     * @param pageInfoDTO requested page details.
+     * @return
+     */
     public static Pageable pageableInstance(PageInfoDTO pageInfoDTO) {
         if (pageInfoDTO != null && pageInfoDTO.getPage() >= 0 && pageInfoDTO.getNumberOfPostsPerPage() > 0) {
             return PageRequest.of(pageInfoDTO.getPage(), pageInfoDTO.getNumberOfPostsPerPage());

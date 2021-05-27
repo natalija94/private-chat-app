@@ -9,9 +9,18 @@ import java.io.Serializable;
  */
 @Data
 public class MessageInChatDTO implements Serializable {
+    /**
+     * Sender's username.
+     */
     private String username;
+
+    /**
+     * Sender's message.
+     */
     private String message;
 
-    //maybe remove this one
+    /**
+     * Sender's ipAddress.
+     */
     private String messageDate;
 }

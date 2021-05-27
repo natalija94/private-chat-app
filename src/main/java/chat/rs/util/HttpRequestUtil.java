@@ -6,9 +6,15 @@ import javax.servlet.http.HttpServletRequest;
  * @author natalija
  */
 public class HttpRequestUtil {
+    /**
+     * Util class. Private constructor.
+     */
     private HttpRequestUtil() {
     }
 
+    /**
+     * Constant for IP header params.
+     */
     private static final String[] IP_HEADER_CANDIDATES = {
             "X-Forwarded-For",
             "Proxy-Client-IP",
@@ -23,6 +29,14 @@ public class HttpRequestUtil {
             "REMOTE_ADDR"
     };
 
+    /**
+     * Util function. Return ipAddress from request.
+     * Initially I thought it would be okay to save information about clients who sent inappropriate content,
+     * so this ipAddress will be banned. Unfortunately, I haven't finished it.
+     *
+     * @param request as HttpServletRequest
+     * @return formatted ipAddress.
+     */
     public static String getClientIpAddressFromRequest(HttpServletRequest request) {
         if (request != null) {
             for (String header : IP_HEADER_CANDIDATES) {
