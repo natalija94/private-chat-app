@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  mysql-standalone:
+    image: 'mysql:5.7'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=natalija
+      - MYSQL_PASSWORD=1234
+      - MYSQL_DATABASE=chatrs
+    ports:
+      - "3307:3306"
+
+  springboot-docker-container:
+    image: chat-rs-backend-container
+    ports:
+      - "10700:10700"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-standalone:3306/chatrs?autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: "natalija"
+      SPRING_DATASOURCE_PASSWORD: "1234"
+    depends_on:
+      - mysql-standalone
+    volumes:
+      - /data/backend-container
+
+  node-js-reactjs-app:
+    image: chat-frontend-container
+    ports:
+      - "3000:3000"

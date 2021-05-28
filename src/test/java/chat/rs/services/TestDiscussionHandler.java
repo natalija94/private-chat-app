@@ -23,17 +23,16 @@ import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Slice;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
 
-import java.util.Optional;
-
 import static chat.rs.mocks.MockDBObjects.ANY_IP_ADDRESS;
-import static chat.rs.mocks.MockDBObjects.createMessageDBInChat;
 
 /**
  * @author natalija
  */
 @RunWith(MockitoJUnitRunner.class)
+@ActiveProfiles("test")
 public class TestDiscussionHandler {
 
     @Mock
