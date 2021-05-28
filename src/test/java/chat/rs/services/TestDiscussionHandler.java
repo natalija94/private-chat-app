@@ -67,7 +67,7 @@ public class TestDiscussionHandler {
     @Test
     public void testSaveCorruptedDTOMessageResponse() {
         MessageInChat corruptedMessage = MockDBObjects.createMessageDBWithoutState();
-        Mockito.when(repository.save(corruptedMessage)).thenReturn(corruptedMessage);
+        Mockito.lenient().when(repository.save(corruptedMessage)).thenReturn(corruptedMessage);
         ResponseDTO dto = discussionHandler.saveMessage(MockDTOs.createMessageWithFullOkayData(), ANY_IP_ADDRESS);
         Assert.assertTrue(dto.getStatus() == ResponseStatus.ERROR);
         Assert.assertTrue(dto.getErrorMessage() != null);
@@ -114,7 +114,7 @@ public class TestDiscussionHandler {
     @Test
     public void testFindConversationWithPaginationAppropriateContent() {
         Slice<MessageInChatVO> messageInChatVOS = MockViewObjects.createMultipleVOs();
-        Mockito.when(repository.findFullConversationByState(ChatMessageState.OKAY)).thenReturn(messageInChatVOS.getContent());
+        Mockito.lenient().when(repository.findFullConversationByState(ChatMessageState.OKAY)).thenReturn(messageInChatVOS.getContent());
         Mockito.when(repository.findConversationByStatePaginated(ChatMessageState.OKAY, PageableFactory.pageableInstance(null))).thenReturn(messageInChatVOS);
 
         ResponseDTO dto = discussionHandler.getConversationDetails(MockDTOs.createPageInfoOkay(), DiscussionFilter.APPROPRIATE_CONTENT);
@@ -126,7 +126,7 @@ public class TestDiscussionHandler {
 
     @Test
     public void testResponseWhenNullResultsFromDB() {
-        Mockito.when(repository.findFullConversationByState(ChatMessageState.OKAY)).thenReturn(null);
+        Mockito.lenient().when(repository.findFullConversationByState(ChatMessageState.OKAY)).thenReturn(null);
         Mockito.when(repository.findConversationByStatePaginated(ChatMessageState.OKAY, PageableFactory.pageableInstance(null))).thenReturn(null);
 
         ResponseDTO dto = discussionHandler.getConversationDetails(MockDTOs.createPageInfoOkay(), DiscussionFilter.APPROPRIATE_CONTENT);
