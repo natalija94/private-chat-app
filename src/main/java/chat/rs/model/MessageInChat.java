@@ -13,6 +13,18 @@ import java.time.LocalDateTime;
 @Table
 @Data
 public class MessageInChat {
+    public MessageInChat() {
+    }
+
+    public MessageInChat(MessageInChat messageInChat) {
+        this.ipAddress = messageInChat.getIpAddress();
+        this.id = messageInChat.getId();
+        this.username = messageInChat.getUsername();
+        this.message = messageInChat.getMessage();
+        this.messageDate = messageInChat.getMessageDate();
+        this.state = messageInChat.getState();
+    }
+
     /**
      * Message id.
      */

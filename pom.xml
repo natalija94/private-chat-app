@@ -42,13 +42,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--        &lt;!&ndash;        test&ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-test</artifactId>-->
-        <!--        </dependency>-->
-        <!--        &lt;!&ndash;        test dep end&ndash;&gt;-->
-
         <!-- web socket-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -59,6 +52,24 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
         <!-- web socket end-->
+
+        <!--test-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--test-->
 
         <!--spring boot end-->
 

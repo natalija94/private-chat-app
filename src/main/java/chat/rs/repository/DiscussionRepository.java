@@ -22,7 +22,7 @@ public interface DiscussionRepository extends CrudRepository<MessageInChat, Long
      * @return view objects.
      */
     @Query("SELECT new chat.rs.model.MessageInChatVO(m) FROM MessageInChat m WHERE :state = m.state")
-    Slice<MessageInChatVO> findFullConversationByStatePaginated(ChatMessageState state, Pageable pageable);
+    Slice<MessageInChatVO> findConversationByStatePaginated(ChatMessageState state, Pageable pageable);
 
     /**
      * Provides paginated result of chat messages unfiltered.
@@ -48,5 +48,5 @@ public interface DiscussionRepository extends CrudRepository<MessageInChat, Long
      * @return view objects.
      */
     @Query("SELECT new chat.rs.model.MessageInChatVO(m) FROM MessageInChat m")
-    List<MessageInChatVO> getFullConversationForPreview();
+    List<MessageInChatVO> getFullConversation();
 }

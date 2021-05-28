@@ -40,4 +40,11 @@ public class MessageInChatVO {
         this.state = messageInChat.getState();
         this.messageDate = DateUtil.convertToDateString(messageInChat.getMessageDate());
     }
+
+    /**
+     * No args constructor.
+     */
+    public MessageInChatVO(){
+
+    }
 }

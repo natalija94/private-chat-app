@@ -106,9 +106,9 @@ public class DiscussionHandlerImpl implements DiscussionHandler {
             if (query == null) {
                 messagesForSpecifiedPage = discussionRepository.findConversationPaginated(PageableFactory.pageableInstance(pageInfoDTO));
             } else {
-                messagesForSpecifiedPage = discussionRepository.findFullConversationByStatePaginated(query, PageableFactory.pageableInstance(pageInfoDTO));
+                messagesForSpecifiedPage = discussionRepository.findConversationByStatePaginated(query, PageableFactory.pageableInstance(pageInfoDTO));
             }
-            dto.setData(messagesForSpecifiedPage.getContent());
+            dto.setData(messagesForSpecifiedPage != null ? messagesForSpecifiedPage.getContent() : null);
             dto.setStatus(ResponseStatus.SUCCESS);
         } catch (Exception e) {
             dto.setStatus(ResponseStatus.ERROR);
@@ -129,7 +129,7 @@ public class DiscussionHandlerImpl implements DiscussionHandler {
             List<MessageInChatVO> messagesForSpecifiedPage;
             ChatMessageState query = ChatMessageFilterMapper.mapDiscussionFilterToChatMessageState(discussionFilter);
             if (query == null) {
-                messagesForSpecifiedPage = discussionRepository.getFullConversationForPreview();
+                messagesForSpecifiedPage = discussionRepository.getFullConversation();
             } else {
                 messagesForSpecifiedPage = discussionRepository.findFullConversationByState(query);
             }

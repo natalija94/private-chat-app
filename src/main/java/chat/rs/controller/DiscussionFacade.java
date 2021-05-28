@@ -43,7 +43,7 @@ public class DiscussionFacade {
 
     @GetMapping(RestConstants.FULL_DISCUSSION_PATH)
     @CrossOrigin(origins="*")
-    public ResponseDTO getFullDiscussion(@RequestParam(name = "filter") DiscussionFilter filter) {
+    public ResponseDTO getFullDiscussion(@RequestParam(name = "filter", required = false, defaultValue = "NONE") DiscussionFilter filter) {
         log.info("Get resource: {}", RestConstants.FULL_DISCUSSION_PATH);
         return discussionHandlerImpl.getFullConversation(filter);
     }
