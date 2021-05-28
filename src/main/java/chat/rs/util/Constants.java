@@ -24,4 +24,10 @@ public class Constants {
      * My idea was: conversation should be filtered so it doesn't contain any hate speech.
      */
     public static String HATE_SPEECH = "This is a hate speech regarding some topic.";
+
+    /**
+     * Mock example for kind of hate speech.
+     * My idea was: conversation should be filtered so it doesn't contain any hate speech.
+     */
+    public static String HATE_SPEECH_MESSAGE =   "Hey!:) Offensive content is not appropriate in this discussion.";
 }

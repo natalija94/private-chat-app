@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+import static chat.rs.util.Constants.HATE_SPEECH_MESSAGE;
+
 /**
  * @author natalija
  */
@@ -76,7 +78,7 @@ public class DiscussionHandlerImpl implements DiscussionHandler {
                 log.info("Message is successfully saved. Details: {}", messageInChat);
             } else {
                 dto.setStatus(ResponseStatus.ERROR);
-                dto.setErrorMessage("Hey!:) Offensive content is not appropriate in this discussion.");
+                dto.setErrorMessage(HATE_SPEECH_MESSAGE);
             }
             dto.setData(messageInChat.getState());
         } catch (Exception e) {

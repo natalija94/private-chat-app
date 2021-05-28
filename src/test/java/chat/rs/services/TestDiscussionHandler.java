@@ -12,8 +12,9 @@ import chat.rs.mocks.MockViewObjects;
 import chat.rs.model.MessageInChat;
 import chat.rs.model.MessageInChatVO;
 import chat.rs.repository.DiscussionRepository;
-import chat.rs.service.MessageInspector;
 import chat.rs.service.impl.DiscussionHandlerImpl;
+import chat.rs.service.impl.MessageInspectorImpl;
+import chat.rs.util.Constants;
 import chat.rs.util.PageableFactory;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,6 +24,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.data.domain.Slice;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
+
+import java.util.Optional;
 
 import static chat.rs.mocks.MockDBObjects.ANY_IP_ADDRESS;
 import static chat.rs.mocks.MockDBObjects.createMessageDBInChat;
@@ -41,8 +44,9 @@ public class TestDiscussionHandler {
 
     @Mock
     private ChatMessageConverter chatMessageConverter;
-//    @Spy
-//    private MessageInspectorImpl inspector;
+
+    @Mock
+    MessageInspectorImpl messageInspector;
 
     @InjectMocks
     DiscussionHandlerImpl discussionHandler;
@@ -70,13 +74,28 @@ public class TestDiscussionHandler {
     }
 
     @Test
-    public void testSaveOffensiveMessage() {
-        MessageInChatDTO messageInChatDTO = MockDTOs.createMessageWithFullOffensiveData();
-        MessageInChat messageInChat = chatMessageConverter.assembleMessageFromMessageDTO(messageInChatDTO, ANY_IP_ADDRESS);
+    public void testSaveOffensiveMessageResponse() {
+        MessageInChatDTO messageInChatDTO = MockDTOs.createMessageWithFullOkayData();
+        MessageInChat messageInChat = MockDBObjects.createMessageDBInChat(ChatMessageState.OKAY);
+        Mockito.when(chatMessageConverter.assembleMessageFromMessageDTO(messageInChatDTO, ANY_IP_ADDRESS)).thenReturn(messageInChat);
         Mockito.when(repository.save(messageInChat)).thenReturn(messageInChat);
+
         ResponseDTO dto = discussionHandler.saveMessage(messageInChatDTO, ANY_IP_ADDRESS);
-        Assert.assertFalse(dto.getStatus() == ResponseStatus.SUCCESS);
-        Assert.assertFalse(dto.getErrorMessage() == null);
+        Assert.assertTrue(dto.getStatus() == ResponseStatus.SUCCESS);
+        Assert.assertTrue(dto.getErrorMessage() == null);
+        Assert.assertEquals(dto.getData(), messageInChat.getState());
+    }
+
+    @Test
+    public void testSaveOkayMessageResponse() {
+        MessageInChatDTO messageInChatDTO = MockDTOs.createMessageWithFullOffensiveData();
+        MessageInChat messageInChat = MockDBObjects.createMessageDBInChat(ChatMessageState.OFFENSIVE);
+        Mockito.when(chatMessageConverter.assembleMessageFromMessageDTO(messageInChatDTO, ANY_IP_ADDRESS)).thenReturn(messageInChat);
+        Mockito.when(repository.save(messageInChat)).thenReturn(messageInChat);
+
+        ResponseDTO dto = discussionHandler.saveMessage(messageInChatDTO, ANY_IP_ADDRESS);
+        Assert.assertTrue(dto.getStatus() == ResponseStatus.ERROR);
+        Assert.assertEquals(dto.getErrorMessage(), Constants.HATE_SPEECH_MESSAGE);
         Assert.assertEquals(dto.getData(), messageInChat.getState());
     }
 
