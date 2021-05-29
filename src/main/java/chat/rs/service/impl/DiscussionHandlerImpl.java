@@ -88,8 +88,8 @@ public class DiscussionHandlerImpl implements DiscussionHandler {
 
         //todo : +if I had enough time I would definitely handle current page differently -
         // so it would be paginated response and not full discussion;
-        // I mean imagine 1000000 at once returned from server :O
-        
+        // I mean imagine 1000000 messages at once returned from server :O
+
         //inform other clients regarding new messages
         messagingTemplate.convertAndSend(RestConstants.FULL_DISCUSSION_PATH, getFullConversation(DiscussionFilter.NONE));
 
