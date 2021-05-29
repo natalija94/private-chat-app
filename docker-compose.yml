@@ -11,7 +11,7 @@ services:
       - "3307:3306"
     restart: always
     networks:
-      - specific-network-name
+      - chatting-rs
   springboot-docker-container:
     image: chat-rs-backend-container
     ports:
@@ -28,10 +28,10 @@ services:
     volumes:
       - /data/backend-container
     networks:
-      - specific-network-name
-    container_name: "exact-container-reference"
+      - chatting-rs
+    container_name: "backend-reference"
     restart: always
 networks:
-  specific-network-name:
+  chatting-rs:
     external: false
-    name: specific-network-name
+    name: chatting-rs
