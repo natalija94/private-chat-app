@@ -9,7 +9,9 @@ services:
       - MYSQL_DATABASE=chatrs
     ports:
       - "3307:3306"
-
+    restart: always
+    networks:
+      - specific-network-name
   springboot-docker-container:
     image: chat-rs-backend-container
     ports:
@@ -25,8 +27,11 @@ services:
       - mysql-standalone
     volumes:
       - /data/backend-container
-
-  node-js-reactjs-app:
-    image: chat-frontend-container
-    ports:
-      - "3000:3000"
+    networks:
+      - specific-network-name
+    container_name: "exact-container-reference"
+    restart: always
+networks:
+  specific-network-name:
+    external: false
+    name: specific-network-name
