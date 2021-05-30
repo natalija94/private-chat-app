@@ -7,12 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author natalija
  */
+@Repository
 public interface DiscussionRepository extends CrudRepository<MessageInChat, Long> {
     /**
      * Provides pagintaed result of chat messages filtered by state.
